@@ -76,7 +76,7 @@ using namespace cv;
 
 void usage_build()
 {
-    cout << "Usage: smfitting [options] trained_data type testing_images testing_annotations database staticORdynamic recording" << endl
+    cout << "Usage: test_smfitting [options] trained_data type testing_images testing_annotations database staticORdynamic recording" << endl
         << "options: " << endl
         << "   -o    trained data directory (required) " << endl
         << "   -t    fitting method to be used (ASM_PROFILEND, ASM_LTC, AAM_BASIC, AAM_CMUICIA, AAM_IAIA. default ASM_PROFILEND ) " << endl
