@@ -88,34 +88,33 @@ void usage_build()
         << endl << endl;
 
     cout << "Note: current smfitting doesn't defaultly afford 1D Profile ASM. " << endl
-        << "If you would like to try 1D Profile ASM for static images in current smfitting, " << endl
-        << "you have to manually change the code in function VO_Fitting2DSM::VO_StartFitting " << endl
-        << "in file VO_Fitting2DSM.cpp, say, around line 302 of file VO_Fitting2DSM.cpp " << endl
-        << "change the 5th parameter from '2' to '1' of function " << endl
-        << "dynamic_cast<VO_FittingASMNDProfiles*>(this)->VO_ASMNDProfileFitting " << endl
-        << "If you would like to try 1D Profile ASM for dynamic image sequence in current smfitting, " << endl
-        << "you have to manually change the code in function " << endl
-        << "in file smfitting.cpp, say around line 647 of file smfitting.cpp " << endl
-        << "change the 5th parameter from '2' to '1' of function " << endl
-        << "dynamic_cast<VO_FittingASMNDProfiles*>(fitting2dsm)->VO_ASMNDProfileFitting " << endl
+        << "If you would like to try 1D Profile ASM for static images in current smfitting, "
+        << "you have to manually change the code in function VO_Fitting2DSM::VO_StartFitting "
+        << "in file VO_Fitting2DSM.cpp, say, around line 306 of file VO_Fitting2DSM.cpp "
+        << "change the 5th parameter from '2' to '1' of function "
+        << "dynamic_cast<VO_FittingASMNDProfiles*>(this)->VO_ASMNDProfileFitting. " << endl << endl
+        << "If you would like to try 1D Profile ASM for dynamic image sequence in current smfitting, "
+        << "you have to manually change the code in function main() "
+        << "in file smfitting.cpp, say around line 666 of file smfitting.cpp "
+        << "change the 5th parameter from '2' to '1' of function "
+        << "dynamic_cast<VO_FittingASMNDProfiles*>(fitting2dsm)->VO_ASMNDProfileFitting "
         << endl << endl;
     
-    cout << "Face Detection: current smfitting use Adaboost technology to detect face as well as face components " << endl
-        << "for face location initialization. Refer to CFaceDetectionAlgs in main(). " << endl
-        << "Default Adaboost detectors installed with OpenCV installation are used in current smfitting " << endl
-        << "You may manually change the Adaboost detectors according to your own cascade file paths " << endl
+    cout << "Face Detection: current smfitting use Adaboost technology to detect face as well as face components "
+        << "for face location initialization. Refer to CFaceDetectionAlgs in main(). "
+        << "Default Adaboost detectors installed with OpenCV installation are used in current smfitting "
+        << "You may manually change the Adaboost detectors according to your own cascade file paths "
         << endl << endl;
     
-    cout << "Face Tracking: current smfitting only deal with image sequences. " << endl
-        << "If static images are to be tested, there is no point to carry out tracking because " << endl
-        << "for every image, Adaboost detection will be carried out." << endl
-        << "If dynamic image sequences are to be tested, current smfitting only affords Camshift tracking strategy. " << endl
-        << "Please Refer to CTrackingAlgs() in main(), the default setting of function CTrackingAlgs() is Camshift algorithm " << endl
+    cout << "Face Tracking: current smfitting deals with image sequences. "
+        << "If static images are to be tested, there is no point to carry out tracking because "
+        << "for every image, Adaboost detection will be carried out. "
+        << "If dynamic image sequences are to be tested, current smfitting only affords Camshift tracking strategy. "
+        << "Please Refer to CTrackingAlgs() in main(), the default setting of function CTrackingAlgs() is Camshift algorithm "
         << endl << endl;
         
-    cout<< "Vision Open doesn't afford the video IO or webcam IO although JIA Pei has done his own IO for all kinds." << endl
-        << "Users are highly encouraged to use their own video file or webcam IO and use VOSM in their own real-time applications. " << endl
-        << " " << endl
+    cout<< "Vision Open doesn't afford the video IO or webcam IO, although the author has done his own IO for all kinds. "
+        << "Users are highly encouraged to use their own video file or webcam IO and use VOSM in their own real-time applications. "
         << endl << endl;
     
     exit(0);
