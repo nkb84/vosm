@@ -74,7 +74,7 @@ using namespace cv;
 
 void usage_build()
 {
-    cout << "Usage: smbuilding [options] save_directory annotation_directory image_directory shapeinfo_path database channels type levels percentage " << endl
+    cout << "Usage: test_smbuilding [options] save_directory annotation_directory image_directory shapeinfo_path database channels type levels percentage " << endl
         << "options: " << endl
         << "   -o    output directory (default './') " << endl
         << "   -a    annotation directory (required) " << endl
