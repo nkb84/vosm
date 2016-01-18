@@ -61,8 +61,11 @@
 
 #include <iostream>
 #include <cstdio>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/objdetect.hpp"
+#include "opencv2/imgproc.hpp"
+#include "opencv2/highgui.hpp"
 #include "VO_DetectionAlgs.h"
 
 
@@ -90,13 +93,13 @@ double CDetectionAlgs::Detection(   const Mat& iImg,
     switch(this->m_iDetectionMethod)
     {
     case VO_AdditiveStrongerClassifier::BAGGING:
-        CDetectionAlgs::BaggingDetection(   this->m_vDetectedObjectRects,
-                                            this->m_rtreeClassifier,
-                                            iImg,
-                                            confinedArea,
-                                            scale,
-                                            sSize,
-                                            bSize);
+        //CDetectionAlgs::BaggingDetection(   this->m_vDetectedObjectRects,
+        //                                    this->m_rtreeClassifier,
+        //                                    iImg,
+        //                                    confinedArea,
+        //                                    scale,
+        //                                    sSize,
+        //                                    bSize);
         break;
     case VO_AdditiveStrongerClassifier::BOOSTING:
     default:
@@ -228,22 +231,22 @@ double CDetectionAlgs::BoostingDetection( vector<Rect>& objs,
 /*@param    bSize   Input - detected object must be smaller than bSize  */
 /*@return   detection time cost                                         */
 /************************************************************************/
-double CDetectionAlgs::BaggingDetection(vector<Rect>& objs,
-                                        const RTreeClassifier& rtree,
-                                        const Mat& img,
-                                        const Rect* confinedArea,
-                                        const double scale,
-                                        Size sSize,
-                                        Size bSize)
-{
-    double res = (double)cvGetTickCount();
-
-    // To be finished....
-
-    res = ((double)cvGetTickCount() - res)
-        / ((double)cvGetTickFrequency()*1000.);
-    return res;
-}
+//double CDetectionAlgs::BaggingDetection(vector<Rect>& objs,
+//                                        const RTreeClassifier& rtree,
+//                                        const Mat& img,
+//                                        const Rect* confinedArea,
+//                                        const double scale,
+//                                        Size sSize,
+//                                        Size bSize)
+//{
+//    double res = (double)cvGetTickCount();
+//
+//    // To be finished....
+//
+//    res = ((double)cvGetTickCount() - res)
+//        / ((double)cvGetTickFrequency()*1000.);
+//    return res;
+//}
 
 
 void CDetectionAlgs::VO_DrawDetection(Mat& ioImg, Scalar color)

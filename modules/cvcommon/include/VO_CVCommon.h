@@ -63,9 +63,9 @@
 #define __VO_CVCOMMON_H__
 
 
-#include "opencv/cxcore.h"
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+#include "opencv2/video/tracking.hpp"
+#include "opencv2/imgproc.hpp"
+#include "opencv2/highgui.hpp"
 #include "VO_Common.h"
 #include <boost/filesystem.hpp>
 

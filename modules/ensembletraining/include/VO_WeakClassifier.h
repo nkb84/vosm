@@ -63,12 +63,12 @@
 #define __VO_WEAKCLASSIFIER_H_
 
 
-#include "opencv/ml.h"
+#include "opencv2/ml.hpp"
 
 using namespace std;
 using namespace cv;
 
-class VO_WeakClassifier : public CvBoostTree
+class VO_WeakClassifier : public ml::Boost
 {
 protected:
     /** For every weak classifier, every single feature has a single threshold to do binary classification */

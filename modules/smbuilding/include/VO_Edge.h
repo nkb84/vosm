@@ -62,8 +62,9 @@
 #define __VO_EDGE_H__
 
 #include <iostream>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/highgui.hpp"
 
 using namespace std;
 using namespace cv;

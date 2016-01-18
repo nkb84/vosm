@@ -64,8 +64,10 @@
 #define __VO_TRIANGLE2DSTRUCTURE_H__
 
 #include <vector>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/imgproc.hpp"
+#include "opencv2/highgui.hpp"
 #include "VO_Triangle2D.h"
 
 

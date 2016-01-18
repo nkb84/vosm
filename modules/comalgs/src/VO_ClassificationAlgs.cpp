@@ -61,8 +61,9 @@
 
 #include <iostream>
 #include <cstdio>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/highgui.hpp"
 #include "VO_ClassificationAlgs.h"
 
 
@@ -88,96 +89,57 @@ void CClassificationAlgs::Training( const Mat_<float>& data,
     switch(this->m_iClassificationMethod)
     {
     case CClassificationAlgs::DecisionTree:
-        this->m_CVDtree.train(  data,
-                                CV_ROW_SAMPLE,
-                                categories,
-                                Mat(),
-                                Mat(),
-                                Mat(),
-                                Mat(),
-                                CvDTreeParams(  INT_MAX,
-                                                2,
-                                                0.0f,
-                                                false,
-                                                this->m_iNbOfCategories,
-                                                0,
-                                                false,
-                                                false,
-                                                0 ) );
+		this->m_CVDtree->setMaxDepth(INT_MAX);
+		this->m_CVDtree->setMinSampleCount(2);
+		this->m_CVDtree->setRegressionAccuracy(0.0f);
+		this->m_CVDtree->setUseSurrogates(false);
+		this->m_CVDtree->setMaxCategories(this->m_iNbOfCategories);
+		this->m_CVDtree->setCVFolds(0);
+		this->m_CVDtree->setUse1SERule(false);
+		this->m_CVDtree->setTruncatePrunedTree(false);
+		this->m_CVDtree->train(data, ml::SampleTypes::ROW_SAMPLE, categories);
         break;
     case CClassificationAlgs::Boost:
-        this->m_CVBoost.train(  data,
-                                CV_ROW_SAMPLE,
-                                categories,
-                                Mat(),
-                                Mat(),
-                                Mat(),
-                                Mat(),
-                                CvBoostParams(  CvBoost::DISCRETE,
-                                                50,
-                                                0.95,
-                                                INT_MAX,
-                                                false,
-                                                0),
-                                false );
+		this->m_CVBoost->setBoostType(ml::Boost::DISCRETE);
+		this->m_CVBoost->setWeakCount(50);
+		this->m_CVBoost->setWeightTrimRate(0.95);
+		this->m_CVBoost->setMaxDepth(INT_MAX);
+		this->m_CVBoost->setUseSurrogates(false);
+		this->m_CVBoost->train(data, ml::SampleTypes::ROW_SAMPLE, categories);
         break;
     case CClassificationAlgs::RandomForest:
-        this->m_CVRTrees.train( data, 
-                                CV_ROW_SAMPLE,
-                                categories,
-                                Mat(),
-                                Mat(),
-                                Mat(),
-                                Mat(),
-                                CvRTParams( INT_MAX,
-                                            2,
-                                            0.0f,
-                                            false,
-                                            this->m_iNbOfCategories,
-                                            0,
-                                            true,
-                                            0,
-                                            100,
-                                            0.0f,
-                                            CV_TERMCRIT_ITER ) );
-        break;
-    case CClassificationAlgs::ExtremeRandomForest:
-        this->m_CVERTrees.train(data,
-                                CV_ROW_SAMPLE,
-                                categories,
-                                Mat(),
-                                Mat(),
-                                Mat(),
-                                Mat(),
-                                CvRTParams( INT_MAX,
-                                            2,
-                                            0.0f,
-                                            false,
-                                            this->m_iNbOfCategories,
-                                            0,
-                                            true,
-                                            0,
-                                            100,
-                                            0.0f,
-                                            CV_TERMCRIT_ITER ) );
+		this->m_CVRTrees->setMaxDepth(INT_MAX);
+		this->m_CVRTrees->setMinSampleCount(2);
+		this->m_CVRTrees->setRegressionAccuracy(0.0f);
+		this->m_CVRTrees->setUseSurrogates(false);
+		this->m_CVRTrees->setMaxCategories(this->m_iNbOfCategories);
+		this->m_CVRTrees->setCalculateVarImportance(true);
+		this->m_CVRTrees->setActiveVarCount(0);
+		this->m_CVRTrees->setTermCriteria(TermCriteria(TermCriteria::MAX_ITER, 100, 0.0f));
+		this->m_CVRTrees->train(data, ml::SampleTypes::ROW_SAMPLE, categories);
+		break;
+	case CClassificationAlgs::ExtremeRandomForest:
+		this->m_CVERTrees->setMaxDepth(INT_MAX);
+		this->m_CVERTrees->setMinSampleCount(2);
+		this->m_CVERTrees->setRegressionAccuracy(0.0f);
+		this->m_CVERTrees->setUseSurrogates(false);
+		this->m_CVERTrees->setMaxCategories(this->m_iNbOfCategories);
+		this->m_CVERTrees->setCalculateVarImportance(true);
+		this->m_CVERTrees->setActiveVarCount(0);
+		this->m_CVERTrees->setTermCriteria(TermCriteria(TermCriteria::MAX_ITER, 100, 0.0f));
+		this->m_CVERTrees->train(data, ml::SampleTypes::ROW_SAMPLE, categories);
         break;
     case CClassificationAlgs::SVM:
-        this->m_CVSVM.train(data,
-                            categories,
-                            Mat(),
-                            Mat(),
-                            CvSVMParams(CvSVM::C_SVC,
-                                        CvSVM::RBF,
-                                        0,
-                                        1,
-                                        0,
-                                        1,
-                                        0,
-                                        0,
-                                        NULL,
-                                        cvTermCriteria( CV_TERMCRIT_ITER,
-                                                        1000,
-                                                        1E-6) ) );
+		this->m_CVSVM->setType(ml::SVM::C_SVC);
+		this->m_CVSVM->setKernel(ml::SVM::KernelTypes::RBF);
+		this->m_CVSVM->setDegree(0);
+		this->m_CVSVM->setGamma(1);
+		this->m_CVSVM->setCoef0(0);
+		this->m_CVSVM->setC(1);
+		this->m_CVSVM->setNu(0);
+		this->m_CVSVM->setP(0);
+		this->m_CVSVM->setTermCriteria(TermCriteria(TermCriteria::MAX_ITER, 1000, 1E-6));
+		this->m_CVSVM->train(data, ml::SampleTypes::ROW_SAMPLE, categories);
         break;
     }
 }
@@ -197,29 +159,29 @@ int CClassificationAlgs::Classification(const Mat_<float>& sample )
     {
     case CClassificationAlgs::DecisionTree:
         {
-            CvDTreeNode* node = this->m_CVDtree.predict( sample );
-            res = node->class_idx;
+            res = (int) this->m_CVDtree->predict( sample );
+            //res = node->class_idx;
         }
         break;
     case CClassificationAlgs::Boost:
         {
-            res = (int) this->m_CVBoost.predict( sample );
+            res = (int) this->m_CVBoost->predict( sample );
         }
         break;
     case CClassificationAlgs::RandomForest:
         {
-            res = (int) this->m_CVRTrees.predict( sample );
+            res = (int) this->m_CVRTrees->predict( sample );
         }
         break;
     case CClassificationAlgs::ExtremeRandomForest:
         {
-            res = (int) this->m_CVERTrees.predict( sample );
+            res = (int) this->m_CVERTrees->predict( sample );
         }
         break;
     case CClassificationAlgs::SVM:
     default:
         {
-            res = (int) this->m_CVSVM.predict( sample );
+            res = (int) this->m_CVSVM->predict( sample );
         }
         break;
     }
@@ -235,28 +197,28 @@ void CClassificationAlgs::Save(const string& fn ) const
     {
     case CClassificationAlgs::DecisionTree:
         {
-            this->m_CVDtree.save(fn.c_str());
+            this->m_CVDtree->save(fn.c_str());
         }
         break;
     case CClassificationAlgs::Boost:
         {
-            this->m_CVBoost.save(fn.c_str());
+            this->m_CVBoost->save(fn.c_str());
         }
         break;
     case CClassificationAlgs::RandomForest:
         {
-            this->m_CVRTrees.save(fn.c_str());
+            this->m_CVRTrees->save(fn.c_str());
         }
         break;
     case CClassificationAlgs::ExtremeRandomForest:
         {
-            this->m_CVERTrees.save(fn.c_str());
+            this->m_CVERTrees->save(fn.c_str());
         }
         break;
     case CClassificationAlgs::SVM:
     default:
         {
-            this->m_CVSVM.save(fn.c_str());
+            this->m_CVSVM->save(fn.c_str());
         }
         break;
     }
@@ -270,27 +232,27 @@ void CClassificationAlgs::Load(const string& fn)
     {
     case CClassificationAlgs::DecisionTree:
         {
-            this->m_CVDtree.load(fn.c_str());
+            this->m_CVDtree = Algorithm::load<ml::DTrees>(fn.c_str());
         }
         break;
     case CClassificationAlgs::Boost:
         {
-            this->m_CVBoost.load(fn.c_str());
+            this->m_CVBoost = Algorithm::load<ml::Boost>(fn.c_str());
         }
         break;
     case CClassificationAlgs::RandomForest:
         {
-            this->m_CVRTrees.load(fn.c_str());
+            this->m_CVRTrees = Algorithm::load<ml::RTrees>(fn.c_str());
         }
         break;
     case CClassificationAlgs::ExtremeRandomForest:
         {
-            this->m_CVERTrees.load(fn.c_str());
+            this->m_CVERTrees = Algorithm::load<ml::RTrees>(fn.c_str());
         }
         break;
     case CClassificationAlgs::SVM:
         {
-            this->m_CVSVM.load(fn.c_str());
+            this->m_CVSVM = Algorithm::load<ml::SVM>(fn.c_str());
         }
     case CClassificationAlgs::NONE:
     default:

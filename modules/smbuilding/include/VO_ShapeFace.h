@@ -67,8 +67,9 @@
 #include <string>
 #include <cmath>
 #include <iostream>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/highgui.hpp"
 
 #include "VO_FaceCompPos.h"
 #include "VO_Shape.h"

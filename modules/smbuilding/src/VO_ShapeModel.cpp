@@ -344,53 +344,37 @@ bool VO_ShapeModel::VO_TriangleHasBeenCounted(const vector<VO_Triangle2DStructur
  * @param       outEdges            Output - edges
  * @return      unsigned int        Number of edges
 */
-unsigned int VO_ShapeModel::VO_BuildEdges(const VO_Shape& iShape, const CvSubdiv2D* Subdiv, vector<VO_Edge>& outEdges)
+unsigned int VO_ShapeModel::VO_BuildEdges(const VO_Shape& iShape, const Subdiv2D* Subdiv, vector<VO_Edge>& outEdges)
 {
     unsigned int NbOfPoints = iShape.GetNbOfPoints();
-    CvSeqReader  reader;
+	vector<Vec4f> edgeList;
+	Subdiv->getEdgeList(edgeList);
 
-    cvStartReadSeq( (CvSeq*)(Subdiv->edges), &reader, 0 );
+	for (unsigned int i = 0; i < edgeList.size(); i++) {
+        Vec4f edge = edgeList[i];
 
-    for( unsigned int i = 0; i < Subdiv->edges->total; i++ )
-    {
-        CvQuadEdge2D* edge = (CvQuadEdge2D*)(reader.ptr);
+        Point2f org = Point2f(edge[0], edge[1]);
+        Point2f dst = Point2f(edge[2], edge[3]);
 
-        if( CV_IS_SET_ELEM( edge ))
+        for (unsigned int j = 0; j < NbOfPoints; j++)
         {
-            Point2f org;
-            Point2f dst;
-
-            CvSubdiv2DPoint* org_pt = cvSubdiv2DEdgeOrg((CvSubdiv2DEdge)edge);
-            CvSubdiv2DPoint* dst_pt = cvSubdiv2DEdgeDst((CvSubdiv2DEdge)edge);
-
-            if( org_pt && dst_pt )
+            // if the current edge convex (org points, not the dst point) is in our point list
+            if ( (fabs ( org.x - iShape.GetACol(j)(0, 0) ) < FLT_EPSILON )
+                && ( fabs ( org.y - iShape.GetACol(j)(1, 0) ) < FLT_EPSILON ) )
             {
-                org = org_pt->pt;
-                dst = dst_pt->pt;
-
-                for (unsigned int j = 0; j < NbOfPoints; j++)
+                for (unsigned int k = 0; k < NbOfPoints; k++)
                 {
-                    // if the current edge convex (org points, not the dst point) is in our point list
-                    if ( (fabs ( org.x - iShape.GetACol(j)(0, 0) ) < FLT_EPSILON )
-                        && ( fabs ( org.y - iShape.GetACol(j)(1, 0) ) < FLT_EPSILON ) )
+                    // With the above org point, we search around for the dst point(s),
+                    // which make org-dst an edge during cvSubdivDelaunay2DInsert()
+                    if ( ( fabs (dst.x - iShape.GetACol(k)(0, 0) ) < FLT_EPSILON )
+                        && ( fabs (dst.y - iShape.GetACol(k)(1, 0) ) < FLT_EPSILON ) )
                     {
-                        for (unsigned int k = 0; k < NbOfPoints; k++)
-                        {
-                            // With the above org point, we search around for the dst point(s),
-                            // which make org-dst an edge during cvSubdivDelaunay2DInsert()
-                            if ( ( fabs (dst.x - iShape.GetACol(k)(0, 0) ) < FLT_EPSILON )
-                                && ( fabs (dst.y - iShape.GetACol(k)(1, 0) ) < FLT_EPSILON ) )
-                            {
-                                // Already tested, this->m_vEdge is definitely correct!
-                                outEdges.push_back ( VO_Edge(j,k) );
-                            }
-                        }
+                        // Already tested, this->m_vEdge is definitely correct!
+                        outEdges.push_back ( VO_Edge(j,k) );
                     }
                 }
             }
         }
-
-        CV_NEXT_SEQ_ELEM( Subdiv->edges->elem_size, reader );
     }
 
     return outEdges.size();
@@ -467,28 +451,24 @@ void VO_ShapeModel::VO_BuildTemplateMesh(   const VO_Shape& iShape,
     //////////////////////////////////////////////////////////////////////////
     // Build Delaunay Triangulation Sub Divisions
     // Later VO_BuildEdges need DTSubdiv information
-    CvSubdiv2D* tempCVSubdiv = NULL;
-
     Rect rect = iShape.GetShapeBoundRect();
 
-    CvMemStorage* DelaunayStorage = cvCreateMemStorage(0);
-
     // By JIA Pei, 2006-09-20. How to release this storage?
-    tempCVSubdiv = cvCreateSubdivDelaunay2D( rect, DelaunayStorage );
+	Subdiv2D tempCVSubdiv(rect);
 
     for( unsigned int i = 0; i < NbOfPoints; i++ )
     {
         Point2f onePoint = iShape.GetA2DPoint(i);
-        cvSubdivDelaunay2DInsert( tempCVSubdiv, onePoint);
+        tempCVSubdiv.insert(onePoint);
     }
     //////////////////////////////////////////////////////////////////////////
 
-    unsigned int NbOfEdges = VO_ShapeModel::VO_BuildEdges(iShape, tempCVSubdiv, edges);
+    unsigned int NbOfEdges = VO_ShapeModel::VO_BuildEdges(iShape, &tempCVSubdiv, edges);
     unsigned int NbOfTriangles = VO_ShapeModel::VO_BuildTriangles (iShape, edges, triangles);
 
     // How to release CvSubdiv2D* m_CVSubdiv is still a problem.
-    if (tempCVSubdiv)   cvClearSubdivVoronoi2D( tempCVSubdiv );
-    cvReleaseMemStorage( &DelaunayStorage );
+    //if (tempCVSubdiv)   cvClearSubdivVoronoi2D( tempCVSubdiv );
+    //cvReleaseMemStorage( &DelaunayStorage );
 }
 
 
@@ -833,7 +813,7 @@ void VO_ShapeModel::VO_BuildShapeModel( const vector<string>& allLandmarkFiles4T
         Mat tmpRow = matAlignedShapes.row(i);
         this->m_vAlignedShapes[i].GetTheShapeInARow().copyTo(tmpRow);
     }
-    this->m_PCAAlignedShape(matAlignedShapes, matAlignedMeanShape, CV_PCA_DATA_AS_ROW, this->m_iNbOfEigenShapesAtMost );
+    this->m_PCAAlignedShape(matAlignedShapes, matAlignedMeanShape, CV_PCA_DATA_AS_ROW, (int)this->m_iNbOfEigenShapesAtMost );
     // to decide how many components to be selected
     this->m_iNbOfShapeEigens = 0;
 
@@ -847,7 +827,7 @@ void VO_ShapeModel::VO_BuildShapeModel( const vector<string>& allLandmarkFiles4T
         if( ps/SumOfEigenValues >= this->m_fTruncatedPercent_Shape) break;
     }
     // m_iNbOfShapeEigens decided. For simplicity, we carry out PCA once again.
-    this->m_PCAAlignedShape(matAlignedShapes, matAlignedMeanShape, CV_PCA_DATA_AS_ROW, this->m_iNbOfShapeEigens );
+    this->m_PCAAlignedShape(matAlignedShapes, matAlignedMeanShape, CV_PCA_DATA_AS_ROW, (int)this->m_iNbOfShapeEigens );
 
     //////////////////////////////////////////////////////////////////////////
     // Calculate template shape mesh

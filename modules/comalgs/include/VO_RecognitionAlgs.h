@@ -63,9 +63,10 @@
 #define __VO_RECOGNITIONALGS_H__
 
 #include <cstring>
-#include "opencv/cv.h"
-#include "opencv/cvaux.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/cvaux.h"
+//#include "opencv/highgui.h"
+#include "opencv2/highgui.hpp"
 #include "VO_CVCommon.h"
 #include "VO_AdditiveStrongerClassifier.h"
 #include "VO_FaceDetectionAlgs.h"

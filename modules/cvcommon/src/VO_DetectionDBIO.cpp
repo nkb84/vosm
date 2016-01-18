@@ -58,9 +58,8 @@
 * Revise Date:      2012-03-22                                              *
 *****************************************************************************/
 
-
-#include <fstream>
 #include <iostream>
+#include <fstream>
 #include "VO_DetectionDBIO.h"
 #include "VO_ScanFilesInDir.h"
 
@@ -190,8 +189,8 @@ void CDetectionDBIO::ReadOneFileFromCASPEALR14MVFD(
     Rect leftEyeRect, rightEyeRect, faceRect, noseRect, mouthRect;
 
     string fn;
-    ifstream ifs;
-    ifs.open(filename.c_str(), ifstream::in);
+    std::ifstream ifs;
+    ifs.open(filename.c_str(), std::ifstream::in);
 
     oFaceComps.resize(21);
     for(int i = 0; i < 21; i++)

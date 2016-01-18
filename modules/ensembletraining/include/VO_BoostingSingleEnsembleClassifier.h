@@ -63,14 +63,14 @@
 #define __VO_BOOSTINGSINGLEENSEMBLECLASSIFIER_H_
 
 
-#include "opencv/ml.h"
+#include "opencv2/ml.hpp"
 #include "VO_WeakClassifier.h"
 
 using namespace std;
 using namespace cv;
 
 
-class VO_BoostingSingleEnsembleClassifier : public CvBoost
+class VO_BoostingSingleEnsembleClassifier : public ml::Boost
 {
 protected:
     /** true positive requirement when training */
@@ -102,16 +102,16 @@ public:
 //                        const CvCascadeBoostParams& _params=CvCascadeBoostParams() );
 
     /** predict */
-    virtual float predict( int sampleIdx, bool returnSum = false ) const;
+    //virtual float predict( int sampleIdx, bool returnSum = false ) const;
 
-    void write( FileStorage &fs, const Mat& featureMap ) const;
+    //void write( FileStorage &fs, const Mat& featureMap ) const;
 //    bool read( const FileNode &node, const CvFeatureEvaluator* _featureEvaluator,
 //               const CvCascadeBoostParams& _params );
-    void markUsedFeaturesInMap( Mat& featureMap );
+    //void markUsedFeaturesInMap( Mat& featureMap );
 protected:
-    virtual bool set_params( const CvBoostParams& _params );
+    /*virtual bool set_params( const CvBoostParams& _params );
     virtual void update_weights( CvBoostTree* tree );
-    virtual bool isErrDesired();
+    virtual bool isErrDesired();*/
 };
 
 #endif    // __VO_BOOSTINGSINGLEENSEMBLECLASSIFIER_H_

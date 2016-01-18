@@ -62,8 +62,8 @@
 #define __VO_ELLIPSE_H__
 
 #include <vector>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+#include "opencv2/imgproc.hpp"
+#include "opencv2/highgui.hpp"
 #include "VO_Shape.h"
 #include "VO_Common.h"
 

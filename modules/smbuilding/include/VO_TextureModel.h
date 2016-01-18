@@ -64,8 +64,9 @@
 
 
 #include <vector>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/highgui.hpp"
 
 #include "VO_Texture.h"
 #include "VO_WarpingPoint.h"

@@ -67,8 +67,9 @@
 #include <string>
 #include <cmath>
 #include <iostream>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/highgui.hpp"
 
 //#include "VO_Triangle2DStructure.h"    // always bear in mind, this is absolutely wrong!!
 class VO_Triangle2DStructure;

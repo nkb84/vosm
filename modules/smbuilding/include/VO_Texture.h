@@ -64,8 +64,9 @@
 
 #include <vector>
 #include <string>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/highgui.hpp"
 
 using namespace std;
 using namespace cv;

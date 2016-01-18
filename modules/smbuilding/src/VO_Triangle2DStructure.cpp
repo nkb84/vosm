@@ -265,7 +265,7 @@ int VO_Triangle2DStructure::IsPointInTriangles(const Point2f& pt, const vector<V
 
         // Here, we can actually give out all the local variables except the BGR,
         // the BGR is not shape based and will be given by function VO_LoadTexturesFromShapes()
-        if (cv::pointPolygonTest( contour, pt, false ) > 0.0)
+        if (pointPolygonTest( contour, pt, false ) > 0.0)
         {
             return k;
         }

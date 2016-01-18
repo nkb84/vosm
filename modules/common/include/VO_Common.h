@@ -161,9 +161,11 @@ using namespace std;
 
 
 /** video show type */
-#define ORIGINAL                        0
-#define DETECTED                        1
-#define FIT                             2
+enum {
+	ORIGINAL						= 0,
+	DETECTED                        = 1,
+	FIT                             = 2
+};
 
 #define MEAN0NORM1                      1
 #define VARY01                          2

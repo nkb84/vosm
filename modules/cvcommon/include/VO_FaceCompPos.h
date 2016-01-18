@@ -66,8 +66,9 @@
 #include <iostream>
 #include <string>
 
-#include "opencv/cxcore.h"
-#include "opencv/cv.h"
+//#include "opencv/cxcore.h"
+//#include "opencv/cv.h"
+#include "opencv2/imgproc.hpp"
 #include "VO_CVCommon.h"
 
 using namespace std;

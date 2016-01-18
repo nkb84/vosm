@@ -62,8 +62,9 @@
 #define __VO_STFT_H__
 
 #include <iostream>
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
+//#include <opencv/cv.h>
+//#include <opencv/highgui.h>
+#include "opencv2/highgui.hpp"
 #include "VO_WindowFunc.h"
 #include "VO_IntegralTransform.h"
 

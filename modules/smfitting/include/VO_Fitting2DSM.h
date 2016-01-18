@@ -62,8 +62,9 @@
 #ifndef     __VO_2DSMFitting__
 #define     __VO_2DSMFitting__
 
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/highgui.hpp"
 
 
 #include "VO_Shape.h"

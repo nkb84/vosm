@@ -65,9 +65,10 @@
 #include <iostream>
 #include <fstream>
 
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
-#include "opencv/ml.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/highgui.hpp"
+#include "opencv2/ml.hpp"
 #include "VO_ScanFilesInDir.h"
 #include "VO_BaggingRandomForestClassifier.h"
 #include "VO_BoostingSingleEnsembleClassifier.h"

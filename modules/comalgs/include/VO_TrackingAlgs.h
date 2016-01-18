@@ -63,8 +63,11 @@
 #define __VO_TRACKINGALGS_H__
 
 
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/video/tracking.hpp"
+#include "opencv2/highgui.hpp"
+#include "opencv2/imgproc.hpp"
 #include "VO_CVCommon.h"
 
 using namespace std;

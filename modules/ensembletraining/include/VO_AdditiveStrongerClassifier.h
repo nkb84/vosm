@@ -65,8 +65,9 @@
 #include <string>
 #include <iostream>
 
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/highgui.hpp"
 
 #include "VO_WeakClassifier.h"
 
@@ -77,7 +78,7 @@ using namespace cv;
 class VO_AdditiveStrongerClassifier
 {
 protected:
-    VO_WeakClassifier           m_VOWeakClassifier;
+    // VO_WeakClassifier           m_VOWeakClassifier;
     
     /** Number of samples */
     unsigned int                m_iNbOfSamples;

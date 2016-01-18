@@ -63,8 +63,9 @@
 #define __VO_FACEDETECTIONALGS_H__
 
 #include <cstring>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/highgui.hpp"
 #include "VO_CVCommon.h"
 #include "VO_FaceCompPos.h"
 #include "VO_DetectionAlgs.h"
@@ -140,14 +141,14 @@ private:
     CascadeClassifier   m_cascadeClassifierNose;
     CascadeClassifier   m_cascadeClassifierMouth;
     CascadeClassifier   m_cascadeClassifierMouthBeard;
-    RTreeClassifier     m_rtreeClassifierFrontalFace;
-    RTreeClassifier     m_rtreeClassifierProfileFace;
-    RTreeClassifier     m_rtreeClassifierEyes;
-    RTreeClassifier     m_rtreeClassifierLeftEye;
-    RTreeClassifier     m_rtreeClassifierRightEye;
-    RTreeClassifier     m_rtreeClassifierNose;
-    RTreeClassifier     m_rtreeClassifierMouth;
-    RTreeClassifier     m_rtreeClassifierMouthBeard;
+    //RTreeClassifier     m_rtreeClassifierFrontalFace;
+    //RTreeClassifier     m_rtreeClassifierProfileFace;
+    //RTreeClassifier     m_rtreeClassifierEyes;
+    //RTreeClassifier     m_rtreeClassifierLeftEye;
+    //RTreeClassifier     m_rtreeClassifierRightEye;
+    //RTreeClassifier     m_rtreeClassifierNose;
+    //RTreeClassifier     m_rtreeClassifierMouth;
+    //RTreeClassifier     m_rtreeClassifierMouthBeard;
 
     /** Initialization */
     void                init(const string& str, unsigned int mtd)

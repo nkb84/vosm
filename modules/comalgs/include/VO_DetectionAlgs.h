@@ -63,9 +63,10 @@
 #define __VO_DETECTIONALGS_H__
 
 #include <cstring>
-#include "opencv/cv.h"
-#include "opencv/cvaux.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/cvaux.h"
+#include "opencv2/objdetect.hpp"
+#include "opencv2/highgui.hpp"
 #include "VO_CVCommon.h"
 #include "VO_AdditiveStrongerClassifier.h"
 
@@ -91,7 +92,7 @@ protected:
     string              m_sFile2BLoad;
 
     /** bagging random forest classifier */
-    RTreeClassifier     m_rtreeClassifier;
+    //RTreeClassifier     m_rtreeClassifier;
     
     /** boosting cascade classifier */
     CascadeClassifier   m_cascadeClassifier;
@@ -125,7 +126,7 @@ public:
         {
         case VO_AdditiveStrongerClassifier::BAGGING:
             {
-                if(str!="") this->SetBaggingRTree(str);
+                //if(str!="") this->SetBaggingRTree(str);
             }
             break;
         case VO_AdditiveStrongerClassifier::BOOSTING:
@@ -138,11 +139,11 @@ public:
         }
     }
 
-    void    SetBaggingRTree(const string& str)
-    {
-            this->m_sFile2BLoad = str;
-            this->m_rtreeClassifier.read( this->m_sFile2BLoad.c_str() );
-    }
+    //void    SetBaggingRTree(const string& str)
+    //{
+    //        this->m_sFile2BLoad = str;
+    //        this->m_rtreeClassifier.read( this->m_sFile2BLoad.c_str() );
+    //}
 
     void    SetBoostingCascade(const string& str)
     {
@@ -158,7 +159,7 @@ public:
                                 Size bSize = Size(  FACEBIGGESTSIZE,
                                                     FACEBIGGESTSIZE) );
 
-    static double   BaggingDetection(   vector<Rect>& objs,
+    /*static double   BaggingDetection(   vector<Rect>& objs,
                                         const RTreeClassifier& rtree,
                                         const Mat& img,
                                         const Rect* confinedArea = NULL,
@@ -166,7 +167,7 @@ public:
                                         Size sSize = Size(FACESMALLESTSIZE,
                                                           FACESMALLESTSIZE),
                                         Size bSize = Size(FACEBIGGESTSIZE,
-                                                          FACEBIGGESTSIZE));
+                                                          FACEBIGGESTSIZE));*/
 
     static double    BoostingDetection( vector<Rect>& objs,
                                         const CascadeClassifier& cascade,

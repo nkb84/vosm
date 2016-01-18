@@ -61,8 +61,9 @@
 
 #include <iostream>
 #include <cstdio>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/highgui.hpp"
 #include "VO_FacePart.h"
 #include "VO_FaceKeyPoint.h"
 #include "VO_FaceDetectionAlgs.h"
@@ -96,7 +97,7 @@ void CFaceDetectionAlgs::SetConfiguration(  const string& strfrontalface,
     {
     case VO_AdditiveStrongerClassifier::BAGGING:
         {
-            if(strfrontalface!="")
+            /*if(strfrontalface!="")
             {
                 this->m_sFile2BLoadFrontalFace  = strfrontalface;
                 this->m_rtreeClassifierProfileFace.read( this->m_sFile2BLoadFrontalFace.c_str() );
@@ -125,7 +126,7 @@ void CFaceDetectionAlgs::SetConfiguration(  const string& strfrontalface,
             {
                 this->m_sFile2BLoadMouth        = strmouth;
                 this->m_rtreeClassifierMouth.read( this->m_sFile2BLoadMouth.c_str() );
-            }
+            }*/
         }
         break;
     case VO_AdditiveStrongerClassifier::BOOSTING:
@@ -189,14 +190,14 @@ double CFaceDetectionAlgs::FaceDetection(   const Mat& iImg,
     switch(this->m_iDetectionMethod)
     {
     case VO_AdditiveStrongerClassifier::BAGGING:
-        CDetectionAlgs::BaggingDetection(
+        /*CDetectionAlgs::BaggingDetection(
             this->m_vDetectedFaceRects,
             this->m_rtreeClassifierFrontalFace,
             iImg,
             confinedArea,
             scale,
             sSize,
-            bSize);
+            bSize);*/
         break;
     case VO_AdditiveStrongerClassifier::BOOSTING:
         CDetectionAlgs::BoostingDetection(
@@ -494,16 +495,16 @@ bool CFaceDetectionAlgs::VO_FacePartDetection ( const Mat& iImg,
             switch(this->m_iDetectionMethod)
             {
             case VO_AdditiveStrongerClassifier::BAGGING:
-                CDetectionAlgs::BaggingDetection(
-                    detectedfp,
-                    this->m_rtreeClassifierLeftEye,
-                    smallImgROI,
-                    0,
-                    1.0,
-                    Size(iImg.cols/4, iImg.cols/8),
-                    Size(iImg.cols, iImg.cols*2/3) );
-                //  Size(18, 12),
-                //  Size(54, 36) );
+                //CDetectionAlgs::BaggingDetection(
+                //    detectedfp,
+                //    this->m_rtreeClassifierLeftEye,
+                //    smallImgROI,
+                //    0,
+                //    1.0,
+                //    Size(iImg.cols/4, iImg.cols/8),
+                //    Size(iImg.cols, iImg.cols*2/3) );
+                ////  Size(18, 12),
+                ////  Size(54, 36) );
                 break;
             case VO_AdditiveStrongerClassifier::BOOSTING:
                 CDetectionAlgs::BoostingDetection(
@@ -525,16 +526,16 @@ bool CFaceDetectionAlgs::VO_FacePartDetection ( const Mat& iImg,
             switch(this->m_iDetectionMethod)
             {
             case VO_AdditiveStrongerClassifier::BAGGING:
-                CDetectionAlgs::BaggingDetection(
-                    detectedfp,
-                    this->m_rtreeClassifierRightEye,
-                    smallImgROI,
-                    0,
-                    1.0,
-                    Size(iImg.cols/4, iImg.cols/8),
-                    Size(iImg.cols, iImg.cols*2/3) );
-                //  Size(18, 12),
-                //  Size(54, 36) );
+                //CDetectionAlgs::BaggingDetection(
+                //    detectedfp,
+                //    this->m_rtreeClassifierRightEye,
+                //    smallImgROI,
+                //    0,
+                //    1.0,
+                //    Size(iImg.cols/4, iImg.cols/8),
+                //    Size(iImg.cols, iImg.cols*2/3) );
+                ////  Size(18, 12),
+                ////  Size(54, 36) );
                 break;
             case VO_AdditiveStrongerClassifier::BOOSTING:
                 CDetectionAlgs::BoostingDetection(
@@ -556,16 +557,16 @@ bool CFaceDetectionAlgs::VO_FacePartDetection ( const Mat& iImg,
             switch(this->m_iDetectionMethod)
             {
             case VO_AdditiveStrongerClassifier::BAGGING:
-                CDetectionAlgs::BaggingDetection(
-                    detectedfp,
-                    this->m_rtreeClassifierNose,
-                    smallImgROI,
-                    0,
-                    1.0,
-                    Size(iImg.cols/6, iImg.rows/6),
-                    Size(iImg.cols, iImg.rows) );
-                //  Size(18, 15),
-                //  Size(54, 45) );
+                //CDetectionAlgs::BaggingDetection(
+                //    detectedfp,
+                //    this->m_rtreeClassifierNose,
+                //    smallImgROI,
+                //    0,
+                //    1.0,
+                //    Size(iImg.cols/6, iImg.rows/6),
+                //    Size(iImg.cols, iImg.rows) );
+                ////  Size(18, 15),
+                ////  Size(54, 45) );
                 break;
             case VO_AdditiveStrongerClassifier::BOOSTING:
                 CDetectionAlgs::BoostingDetection(
@@ -587,16 +588,16 @@ bool CFaceDetectionAlgs::VO_FacePartDetection ( const Mat& iImg,
             switch(this->m_iDetectionMethod)
             {
             case VO_AdditiveStrongerClassifier::BAGGING:
-                CDetectionAlgs::BaggingDetection(
-                    detectedfp,
-                    this->m_rtreeClassifierMouth,
-                    smallImgROI,
-                    0,
-                    1.0,
-                    Size(iImg.cols/6, iImg.rows/6),
-                    Size(iImg.cols, iImg.rows) );
-                //  Size(25, 15),
-                //  Size(75, 45) );
+                //CDetectionAlgs::BaggingDetection(
+                //    detectedfp,
+                //    this->m_rtreeClassifierMouth,
+                //    smallImgROI,
+                //    0,
+                //    1.0,
+                //    Size(iImg.cols/6, iImg.rows/6),
+                //    Size(iImg.cols, iImg.rows) );
+                ////  Size(25, 15),
+                ////  Size(75, 45) );
                 break;
             case VO_AdditiveStrongerClassifier::BOOSTING:
                 CDetectionAlgs::BoostingDetection(

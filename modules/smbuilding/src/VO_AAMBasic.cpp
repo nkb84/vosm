@@ -1203,7 +1203,7 @@ void VO_AAMBasic::VO_BuildAppearanceModel(  const vector<string>& allLandmarkFil
 
     ////////////////////////////////////////////////////////////////////////////
 
-    this->m_PCAAppearance(matConcatenated, matMeanConcatenated, CV_PCA_DATA_AS_ROW, this->m_iNbOfEigenAppearanceAtMost );
+    this->m_PCAAppearance(matConcatenated, matMeanConcatenated, CV_PCA_DATA_AS_ROW, (int)this->m_iNbOfEigenAppearanceAtMost );
     // to decide how many components to be selected
     this->m_iNbOfAppearanceEigens = 0;
 
@@ -1217,7 +1217,7 @@ void VO_AAMBasic::VO_BuildAppearanceModel(  const vector<string>& allLandmarkFil
         if( ps/SumOfEigenValues >= this->m_fTruncatedPercent_Appearance) break;
     }
     // m_iNbOfAppearanceEigens decided. For simplicity, we carry out PCA once again.
-    this->m_PCAAppearance(matConcatenated, matMeanConcatenated, CV_PCA_DATA_AS_ROW, this->m_iNbOfAppearanceEigens );
+    this->m_PCAAppearance(matConcatenated, matMeanConcatenated, CV_PCA_DATA_AS_ROW, (int)this->m_iNbOfAppearanceEigens );
     this->m_MatAppearanceProject2Truncated = this->m_PCAAppearance.project(matConcatenated);
 
     // extract the shape part of the combined eigen vectors

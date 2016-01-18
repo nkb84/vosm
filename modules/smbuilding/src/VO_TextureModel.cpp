@@ -1596,7 +1596,7 @@ void VO_TextureModel::VO_BuildTextureModel( const vector<string>& allLandmarkFil
         Mat_<float> tmpRow = matNormalizedTextures.row(i);
         this->m_vNormalizedTextures[i].GetTheTextureInARow().copyTo(tmpRow);
     }
-    this->m_PCANormalizedTexture(matNormalizedTextures, matNormalizedMeanTextures, CV_PCA_DATA_AS_ROW, this->m_iNbOfEigenTexturesAtMost );
+    this->m_PCANormalizedTexture(matNormalizedTextures, matNormalizedMeanTextures, CV_PCA_DATA_AS_ROW, (int)this->m_iNbOfEigenTexturesAtMost );
     // to decide how many components to be selected
     this->m_iNbOfTextureEigens = 0;
 
@@ -1610,7 +1610,7 @@ void VO_TextureModel::VO_BuildTextureModel( const vector<string>& allLandmarkFil
         if( ps/SumOfEigenValues >= this->m_fTruncatedPercent_Texture) break;
     }
     // m_iNbOfTextureEigens decided. For simplicity, we carry out PCA once again.
-    this->m_PCANormalizedTexture(matNormalizedTextures, matNormalizedMeanTextures, CV_PCA_DATA_AS_ROW, this->m_iNbOfTextureEigens );
+    this->m_PCANormalizedTexture(matNormalizedTextures, matNormalizedMeanTextures, CV_PCA_DATA_AS_ROW, (int)this->m_iNbOfTextureEigens );
 
     //////////////////////////////////////////////////////////////////////////
     // Calculate m_vNormalizedPointWarpInfo

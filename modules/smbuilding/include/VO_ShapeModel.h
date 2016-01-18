@@ -64,8 +64,10 @@
 
 
 #include <vector>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/imgproc.hpp"
+#include "opencv2/highgui.hpp"
 #include "opencv/cvaux.h"
 
 #include "VO_Edge.h"
@@ -187,7 +189,7 @@ public:
     static bool                     VO_TriangleHasBeenCounted(const vector<VO_Triangle2DStructure>& triangles, const vector<unsigned int>& t);
 
     /** Build Edges */
-    static unsigned int             VO_BuildEdges(const VO_Shape& iShape, const CvSubdiv2D* Subdiv, vector<VO_Edge>& outEdges);
+    static unsigned int             VO_BuildEdges(const VO_Shape& iShape, const Subdiv2D* Subdiv, vector<VO_Edge>& outEdges);
 
     /** Build triangles */
     static unsigned int             VO_BuildTriangles(const VO_Shape& iShape, const vector<VO_Edge>& edges, vector<VO_Triangle2DStructure>& outTriangles);

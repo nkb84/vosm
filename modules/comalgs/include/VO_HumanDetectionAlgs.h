@@ -63,8 +63,9 @@
 #define __VO_HUMANDETECTIONALGS_H__
 
 #include <cstring>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+//#include "opencv/cv.h"
+//#include "opencv/highgui.h"
+#include "opencv2/highgui.hpp"
 #include "VO_CVCommon.h"
 #include "VO_FaceCompPos.h"
 #include "VO_DetectionAlgs.h"

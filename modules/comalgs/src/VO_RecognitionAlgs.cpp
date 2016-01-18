@@ -61,8 +61,9 @@
 
 #include <iostream>
 #include <cstdio>
-#include "opencv/cv.h"
-#include "opencv/highgui.h"
+
+#include "opencv2/calib3d/calib3d_c.h"
+#include "opencv2/highgui.hpp"
 #include "VO_FaceKeyPoint.h"
 #include "VO_RecognitionAlgs.h"
 
@@ -454,32 +455,32 @@ vector<float> CRecognitionAlgs::CalcAbsoluteOrientations(
     CvPOSITObject *positObject = cvCreatePOSITObject( &modelPoints[0], NbOfPoints );
 
     //Estimate the pose
-    CvMatr32f rotation_matrix = new float[9];
-    CvVect32f translation_vector = new float[3];
+    CvMat* rotation_matrix = cvCreateMat(3, 3, CV_32F);
+    CvMat* translation_vector = cvCreateMat(3, 1, CV_32F);;
     CvTermCriteria criteria = cvTermCriteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 100, 1.0e-4f);
-    cvPOSIT( positObject, &srcImagePoints[0], FOCAL_LENGTH, criteria, rotation_matrix, translation_vector );
+    cvPOSIT( positObject, &srcImagePoints[0], FOCAL_LENGTH, criteria, rotation_matrix->data.fl, translation_vector->data.fl);
 
     //rotation_matrix to Euler angles, refer to VO_Shape::GetRotation
-    float sin_beta  = -rotation_matrix[0 * 3 + 2];
-    float tan_alpha = rotation_matrix[1 * 3 + 2] / rotation_matrix[2 * 3 + 2];
-    float tan_gamma = rotation_matrix[0 * 3 + 1] / rotation_matrix[0 * 3 + 0];
+    float sin_beta  = -rotation_matrix->data.fl[0 * 3 + 2];
+    float tan_alpha = rotation_matrix->data.fl[1 * 3 + 2] / rotation_matrix->data.fl[2 * 3 + 2];
+    float tan_gamma = rotation_matrix->data.fl[0 * 3 + 1] / rotation_matrix->data.fl[0 * 3 + 0];
 
     //Project the model points with the estimated pose
     oShape2D = tempShape2D;
     for ( unsigned int i=0; i < NbOfPoints; ++i )
     {
-        pt3d.x = rotation_matrix[0] * modelPoints[i].x +
-            rotation_matrix[1] * modelPoints[i].y +
-            rotation_matrix[2] * modelPoints[i].z +
-            translation_vector[0];
-        pt3d.y = rotation_matrix[3] * modelPoints[i].x +
-            rotation_matrix[4] * modelPoints[i].y +
-            rotation_matrix[5] * modelPoints[i].z +
-            translation_vector[1];
-        pt3d.z = rotation_matrix[6] * modelPoints[i].x +
-            rotation_matrix[7] * modelPoints[i].y +
-            rotation_matrix[8] * modelPoints[i].z +
-            translation_vector[2];
+        pt3d.x = rotation_matrix->data.fl[0] * modelPoints[i].x +
+            rotation_matrix->data.fl[1] * modelPoints[i].y +
+            rotation_matrix->data.fl[2] * modelPoints[i].z +
+            translation_vector->data.fl[0];
+        pt3d.y = rotation_matrix->data.fl[3] * modelPoints[i].x +
+            rotation_matrix->data.fl[4] * modelPoints[i].y +
+            rotation_matrix->data.fl[5] * modelPoints[i].z +
+            translation_vector->data.fl[1];
+        pt3d.z = rotation_matrix->data.fl[6] * modelPoints[i].x +
+            rotation_matrix->data.fl[7] * modelPoints[i].y +
+            rotation_matrix->data.fl[8] * modelPoints[i].z +
+            translation_vector->data.fl[2];
         if ( pt3d.z != 0 )
         {
             pt2d.x = FOCAL_LENGTH * pt3d.x / pt3d.z;
@@ -493,6 +494,9 @@ vector<float> CRecognitionAlgs::CalcAbsoluteOrientations(
     pos[0] = (float)atan(tan_alpha);    // yaw
     pos[1] = (float)asin(sin_beta);     // pitch
     pos[2] = (float)atan(tan_gamma);    // roll
+
+	cvReleaseMat(&rotation_matrix);
+	cvReleaseMat(&translation_vector);
     return pos;
 }
 
