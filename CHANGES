@@ -1,5 +1,11 @@
 Release notes of VOSM.
 
+--Jan, 2016
+1. General
+   - Support opencv 3.1.0
+   - Can be compiled with visual studio community 2015 (not test with other yet, but it may work)
+   - Remove RTreeClassifier, since it's deplicated on opencv 3.1.0
+
 --------------------------- Release 0.3.3 --May, 2012--------------------
 Minor improvements are made in this version VOSM 0.3.3,
 in order to be compatible with OpenCV 2.4.0 above.

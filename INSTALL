@@ -25,7 +25,7 @@ To install VOSM, you need 'cmake' and several third-party libraries are pre-requ
    * CMake (>= 2.8), the build system used by VOSM
      Required for building VOSM
 
-   * OpenCV (>= 2.4.0)
+   * OpenCV (>= 3.0.0)
 
    * Boost (>= 1.48)
      Required for building VOSM and for applications using VOSM
@@ -34,7 +34,7 @@ To install VOSM, you need 'cmake' and several third-party libraries are pre-requ
      Required compiled Boost library: Boost.System
      http://www.boost.org/
 	 
-   * Visual Studio 2010
+   * Visual Studio community 2015 (other version may works)
      Recommended under Windows.
 	 
 	 
